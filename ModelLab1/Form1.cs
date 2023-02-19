@@ -58,7 +58,7 @@ namespace ModelLab1
                 Y[i - 1] = Math.Sqrt(3 / (i * dispersion * Math.Abs(sum))) + 0.5;
                 firstChart.Series[0].Points.AddXY(count, Y[i - 1]);
                 sumProbabilities += Math.Abs( Y[i - 1]);
-                secondChart.Series[0].Points.AddXY(count, sumProbabilities);
+                secondChart.Series[0].Points.AddXY(count, sumProbabilities /54);
                 count += 0.1;
             }
 
