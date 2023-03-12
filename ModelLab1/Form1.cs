@@ -26,15 +26,14 @@ namespace ModelLab1
             firstMethod(firstChart, secondChart); 
         }
 
-        private static double sumForSecondMethods(int N)
+        private static double sumForSecondMethods(int N, double rightBorder ,double leftBorder, double count)
         {
             double sum = 0;
             Random rnd = new Random();
+            double x = 1 / (rightBorder - leftBorder);
 
             for (int i = 1; i <= N; i++)
             {
-                double x = 1 / (double)N;
-                //double x = rnd.NextDouble();
                 sum += 2 * x - 1;
             }
             return sum;
@@ -43,23 +42,42 @@ namespace ModelLab1
         private static void secondMethod(Chart firstChart, Chart secondChart)
         {
             firstChart.Series[0].Points.Clear();
-            
+            double leftBorder = 0, rightBorder = 1;
             double sum = 0, sumProbabilities = 0;
-            int N = 100;
-
-            double step = 1 / (double)N;
-            double[] Y = new double[N];
-            sum = sumForSecondMethods(N);
+            int N = 50;
+            double Y = 0;
             double dispersion = Math.Sqrt(1.0);
-            double count = 0;
+            double count = 0.1;
 
+            /*for (int i = 0; i <= N; i++)
+            {
+                if (leftBorder < count && count < rightBorder)
+                {
+                    Y = 1 / (rightBorder - leftBorder);
+                    firstChart.Series[0].Points.AddXY(count, Y);
+                    Y = (count - leftBorder) / (rightBorder - leftBorder);
+                    secondChart.Series[0].Points.AddXY(count, Y);
+                    count += (rightBorder - leftBorder) / (double)N;
+                }
+                else
+                {
+
+                    count += (rightBorder - leftBorder) / (double)N;
+                }
+
+            }*/
             for (int i = 1; i <= N; i++)
             {
-                Y[i - 1] = Math.Sqrt(3 / (i * dispersion * Math.Abs(sum))) + 0.5;
-                firstChart.Series[0].Points.AddXY(count, Y[i - 1]);
-                sumProbabilities += Math.Abs( Y[i - 1]);
-                secondChart.Series[0].Points.AddXY(count, sumProbabilities /54);
-                count += 0.1;
+
+                    Y = Math.Sqrt(3 / (count * dispersion * sumForSecondMethods(N, rightBorder, leftBorder,count))) + 0.5;
+
+                    firstChart.Series[0].Points.AddXY(count, Y);
+                    sumProbabilities += Math.Abs(Y);
+                    if (sumProbabilities > 1)
+                        secondChart.Series[0].Points.AddXY(count, 1);
+                    else
+                        secondChart.Series[0].Points.AddXY(count, sumProbabilities);
+                    count += (rightBorder - leftBorder) / (double)N;
             }
 
         }
@@ -68,27 +86,19 @@ namespace ModelLab1
         {
             
             firstChart.Series[1].Points.Clear();
-            int N = 100;
-            double[] massive = new double[N];
+            double N = 50;
             double dRandValue = 0;
             double count = 0;
             double mu = 5;
             double sigma = 1;
             double sum = 0;
-
-            for (int n = 0 ; n < N; n++)
-            {
-                dRandValue = Math.Round(1 / Math.Sqrt(2 * Math.PI) * Math.Exp(-0.5 * Math.Pow((count - mu)/sigma, 2)), 5);
-                massive[n] = dRandValue;
-                count += 0.1;
-            }
-            count = 0;
             for (int n = 0; n < N; n++)
             {
-                firstChart.Series[1].Points.AddXY(count - 5, massive[n]);
-                sum += massive[n];
-                secondChart.Series[1].Points.AddXY(count - 5, sum / 10);
-                count += 0.1;
+                dRandValue = Math.Round(1 /(sigma * Math.Sqrt(2 * Math.PI)) * Math.Exp(-0.5 * Math.Pow((count - mu) / sigma, 2)), 2);
+                firstChart.Series[1].Points.AddXY((count - mu) / sigma, dRandValue);
+                sum += dRandValue;
+                secondChart.Series[1].Points.AddXY((count - mu) / sigma, sum / (0.1 * N));
+                count += 1 / (0.1 * N);
             }
         }
 

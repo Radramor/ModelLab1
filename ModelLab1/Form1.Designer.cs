@@ -55,11 +55,10 @@
             this.firstChart.Location = new System.Drawing.Point(12, 12);
             this.firstChart.Name = "firstChart";
             series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StackedColumn;
             series1.Legend = "Legend1";
             series1.Name = "Метод преобразования";
             series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
             series2.Legend = "Legend1";
             series2.Name = "Нормальное распределение";
             this.firstChart.Series.Add(series1);
@@ -91,12 +90,11 @@
             this.secondChart.Location = new System.Drawing.Point(12, 413);
             this.secondChart.Name = "secondChart";
             series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StackedColumn;
             series3.Legend = "Legend1";
             series3.MarkerSize = 2;
             series3.Name = "Метод преобразования";
             series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series4.Legend = "Legend1";
             series4.MarkerSize = 2;
             series4.Name = "Нормальное распределение";
