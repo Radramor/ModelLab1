@@ -67,7 +67,7 @@
             this.firstChart.TabIndex = 0;
             title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             title1.Name = "Title1";
-            title1.Text = "Плотность вероятности";
+            title1.Text = "Гистограмма для метода преобразования ";
             this.firstChart.Titles.Add(title1);
             // 
             // button1
@@ -104,7 +104,7 @@
             this.secondChart.TabIndex = 3;
             title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             title2.Name = "Title1";
-            title2.Text = "Функция распределения";
+            title2.Text = "Гистограмма для ЦПТ";
             this.secondChart.Titles.Add(title2);
             // 
             // Form1
