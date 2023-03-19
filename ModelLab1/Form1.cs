@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -13,6 +14,7 @@ namespace ModelLab1
         private const int NumberOfSamples = 10000; // количество выборок
         private double[] CLT_Y = new double[NumberOfSamples]; // результаты преобразования выборок по формулам
         private double[] Y = new double[NumberOfSamples]; // результаты преобразования выборок по формулам
+        private double[] Fx = new double[NumberOfSamples];
         
         private const double m = 0.5; // матожидание
         private const double dispersion = 1;
@@ -56,18 +58,21 @@ namespace ModelLab1
         void methods()
         {
             GenerateY();
-           //Array.Sort(Y, (x, y) => y.CompareTo(x));
             Array.Sort(Y);
             GenerateCLT_Y();
-           //Array.Sort(CLT_Y, (x, y) => y.CompareTo(x));
             Array.Sort(CLT_Y);
+            
+            CreateGistogramms(Y, firstChart, distributionFirst, 0);
+            CreateGistogramms(CLT_Y, secondChart, distributionSecond, 0);
+            
+            CreateGistogramms(CLT_Y, density, distribution, 0);
+            CreateGistogramms(Y, density, distribution, 1);
+            
 
-            CreateGistogramms(Y, firstChart);
-            CreateGistogramms(CLT_Y, secondChart);
             }
 
 
-        void CreateGistogramms(double[] YNow, Chart chart)
+        void CreateGistogramms(double[] YNow, Chart chart, Chart chart1, int t)
         {
             double minValue, maxValue, intervalLength;
             int countOfIntervals;
@@ -131,7 +136,15 @@ namespace ModelLab1
             {
                 ProbabilitiesOfHittingTheInerval[i] = (double)CounterOfNumbersOnInterval[i] / NumberOfSamples;
                 summs += ProbabilitiesOfHittingTheInerval[i];
-                chart.Series[0].Points.AddXY(MiddlesOfTheIntervals[i], ProbabilitiesOfHittingTheInerval[i]);
+                chart.Series[t].Points.AddXY(Math.Round(MiddlesOfTheIntervals[i], 4), Math.Round(ProbabilitiesOfHittingTheInerval[i], 4));
+            }
+
+            summs = 0;
+            for (int i = 0; i < countOfIntervals; i++)
+            {
+                ProbabilitiesOfHittingTheInerval[i] = (double)CounterOfNumbersOnInterval[i] / NumberOfSamples;
+                summs += ProbabilitiesOfHittingTheInerval[i];
+                chart1.Series[t].Points.AddXY(Math.Round(MiddlesOfTheIntervals[i], 4), Math.Round(summs, 4));
             }
         }
         void generateXSample()
@@ -147,6 +160,41 @@ namespace ModelLab1
         {
             firstChart.Series[0].Points.Clear();
             secondChart.Series[0].Points.Clear();
+            distributionFirst.Series[0].Points.Clear();
+            distributionSecond.Series[0].Points.Clear();
+
+            density.Series[0].Points.Clear();
+            density.Series[1].Points.Clear();
+            distribution.Series[0].Points.Clear();
+            distribution.Series[1].Points.Clear();
+            methods();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            firstChart.Series[0].Points.Clear();
+            secondChart.Series[0].Points.Clear();
+            distributionFirst.Series[0].Points.Clear();
+            distributionSecond.Series[0].Points.Clear();
+
+            density.Series[0].Points.Clear();
+            density.Series[1].Points.Clear();
+            distribution.Series[0].Points.Clear();
+            distribution.Series[1].Points.Clear();
+            methods();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            firstChart.Series[0].Points.Clear();
+            secondChart.Series[0].Points.Clear();
+            distributionFirst.Series[0].Points.Clear();
+            distributionSecond.Series[0].Points.Clear();
+
+            density.Series[0].Points.Clear();
+            density.Series[1].Points.Clear();
+            distribution.Series[0].Points.Clear();
+            distribution.Series[1].Points.Clear();
             methods();
         }
     }
